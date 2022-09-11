@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:login_project/routes/routes.dart';
+import 'package:login_project/services/prefs_service.dart';
+
+import '../routes/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,9 +13,16 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2)).then(
-      (_) => Navigator.pushReplacementNamed(context, Routes.LOGIN),
-    );
+    Future.wait([
+      PrefsService.isAuth(),
+      Future.delayed(const Duration(seconds: 2)),
+    ]).then((value) => value[0]
+        ? Navigator.pushReplacementNamed(context, Routes.HOME)
+        : Navigator.pushReplacementNamed(context, Routes.LOGIN));
+
+    // Future.delayed(const Duration(seconds: 2)).then(
+    // (_) => Navigator.pushReplacementNamed(context, Routes.LOGIN),
+    // );
     super.initState();
   }
 
