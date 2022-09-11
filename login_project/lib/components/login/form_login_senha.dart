@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../controllers/login_controller.dart';
-import 'textfield_login.dart';
+import '../../widgets/textfield_login.dart';
 
 class LoginSenha extends StatelessWidget {
   const LoginSenha({
@@ -21,10 +21,12 @@ class LoginSenha extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         child: Column(
           children: [
+            TextFieldLogin(label: 'Login', onChanged: controller.setLogin),
             TextFieldLogin(
-                text: 'Login', onChange: controller.setLogin),
-            TextFieldLogin(
-                text: 'Senha', onChange: controller.setSenha),
+              label: 'Senha',
+              onChanged: controller.setSenha,
+              obscureText: true,
+            ),
           ],
         ),
       ),
