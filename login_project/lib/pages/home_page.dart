@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:login_project/controllers/home_controller.dart';
 import 'package:login_project/models/post_model.dart';
-import 'package:login_project/repositories/home_repository_mock.dart';
+import 'package:login_project/repositories/home_repository_implement.dart';
+
+import '../routes/routes.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final HomeController _controller =
-      HomeController(homeRepository: HomeRepositoryMock());
+      HomeController(homeRepository: HomerepositoryImplement());
 
   @override
   void initState() {
@@ -27,10 +29,19 @@ class _HomePageState extends State<HomePage> {
       body: ValueListenableBuilder<List<PostModel>>(
         valueListenable: _controller.posts,
         builder: (_, list, __) {
-          return ListView.builder(
+          return ListView.separated(
+            separatorBuilder: (_, __) => const Divider(),
             itemCount: list.length,
-            itemBuilder: ((_, index) => ListTile(
-                  title: Text(list[index].title),
+            itemBuilder: ((_, index) => GestureDetector(
+                  onTap: () => Navigator.of(context)
+                      .pushNamed(Routes.HOME_DETAIL, arguments: list[index]),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Text(list[index].id.toString()),
+                    ),
+                    title: Text(list[index].title),
+                    trailing: const Icon(Icons.arrow_forward),
+                  ),
                 )),
           );
         },
