@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/components/routes.dart';
 import 'package:login_project/controllers/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -61,10 +62,17 @@ class LoginScreen extends StatelessWidget {
                               if (result == true) {
                                 Navigator.pushNamed(
                                   (context),
-                                  '/app',
+                                  Routes.HOME,
                                 );
                               } else {
-                                print('object');
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'Login ou senha inválida',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                );
                               }
                             },
                           );

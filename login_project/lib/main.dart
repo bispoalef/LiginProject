@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/components/routes.dart';
 import 'package:login_project/pages/login.dart';
-import 'package:login_project/pages/page_app.dart';
+import 'package:login_project/pages/home_page.dart';
 import 'package:login_project/pages/splash.dart';
 
 void main() {
@@ -16,9 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/splash',
       routes: {
-        '/splash': (_) => const SplashScreen(),
-        '/login': (_) => LoginScreen(),
-        '/app': (_) => const PageApp(),
+        Routes.SPLASH: (_) => const SplashScreen(),
+        Routes.LOGIN: (_) => LoginScreen(),
+        Routes.HOME: (_) => const HomePage(),
       },
     );
   }

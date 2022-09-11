@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/components/routes.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2)).then(
-      (_) => Navigator.pushReplacementNamed(context, '/login'),
+      (_) => Navigator.pushReplacementNamed(context, Routes.LOGIN),
     );
     super.initState();
   }
