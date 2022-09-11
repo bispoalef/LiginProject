@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:login_project/controllers/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginController controller = LoginController();
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,38 +14,65 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blue.shade500,
-              ),
+            Material(
+              elevation: 15,
+              color: Colors.blue.shade500,
+              borderRadius: BorderRadius.circular(100),
               child: Icon(
                 Icons.people,
                 size: MediaQuery.of(context).size.height * 0.3,
               ),
             ),
             Container(height: 15),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.blue.shade100,
-              ),
+            Material(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.blue.shade100,
+              elevation: 8,
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Column(
-                  children: const [
+                  children: [
                     TextField(
-                      decoration: InputDecoration(label: Text('Login')),
+                      decoration: const InputDecoration(label: Text('Login')),
+                      onChanged: controller.setLogin,
                     ),
                     TextField(
-                        decoration: InputDecoration(label: Text('Senha')),
-                        obscureText: true)
+                      decoration: const InputDecoration(
+                        label: Text('Senha'),
+                      ),
+                      obscureText: true,
+                      onChanged: controller.setSenha,
+                    )
                   ],
                 ),
               ),
             ),
             Container(height: 15),
-            ElevatedButton(onPressed: () {}, child: const Text('LOGIN')),
+            ValueListenableBuilder<bool>(
+              valueListenable: controller.loader,
+              builder: (_, loader, __) => loader
+                  ? const CircularProgressIndicator()
+                  : Material(
+                      elevation: 15,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          controller.auth().then(
+                            (result) {
+                              if (result == true) {
+                                Navigator.pushNamed(
+                                  (context),
+                                  '/app',
+                                );
+                              } else {
+                                print('object');
+                              }
+                            },
+                          );
+                        },
+                        child: const Text('LOGIN'),
+                      ),
+                    ),
+            ),
           ],
         ),
       ),
